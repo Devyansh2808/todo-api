@@ -33,3 +33,11 @@ def delete_todo(todo_id: int):
         raise HTTPException(status_code=404, detail="Todo not found")
     return todos.pop(todo_id)
 
+@app.put("/todos/{todo_id}")
+def update_todo(todo_id: int, todo: TodoCreate):
+    if todo_id not in todos:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    existing_todo = todos[todo_id]
+    updated_todo = existing_todo.model_copy(update={**todo.model_dump(), "updated_at": datetime.now()})
+    todos[todo_id] = updated_todo
+    return updated_todo
