@@ -22,3 +22,7 @@ def create_todo(todo: TodoCreate):
 @app.get("/todos")
 def read_todos():
     return list(todos.values())
+
+@app.get("/todos/{todo_id}")
+def read_todo(todo_id: int):
+    return todos.get(todo_id)
