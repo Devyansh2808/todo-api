@@ -18,3 +18,7 @@ def create_todo(todo: TodoCreate):
     todos[next_id] = todo_item
     next_id += 1
     return todo_item
+
+@app.get("/todos")
+def read_todos():
+    return list(todos.values())
