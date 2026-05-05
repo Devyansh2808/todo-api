@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from models import *
 from datetime import datetime
 
@@ -26,3 +26,10 @@ def read_todos():
 @app.get("/todos/{todo_id}")
 def read_todo(todo_id: int):
     return todos.get(todo_id)
+
+@app.delete("/todos/{todo_id}")
+def delete_todo(todo_id: int):
+    if todo_id not in todos:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    return todos.pop(todo_id)
+
